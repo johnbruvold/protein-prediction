@@ -1,0 +1,24 @@
+name: protein-clf
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - python=3.10
+  - pip
+  - numpy
+  - pandas
+  - matplotlib
+  - seaborn
+  - scikit-learn
+  - scipy
+  - jupyterlab
+  - ipykernel
+  - tqdm
+  - pip:
+    - biopython
+    - umap-learn
+    - shap
+    - streamlit
+    - fair-esm          # Meta's ESM protein language models (stretch goal)
+    - torch             # required by fair-esm
