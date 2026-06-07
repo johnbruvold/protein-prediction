@@ -1,0 +1,7 @@
+setup.py
+protein_clf.egg-info/PKG-INFO
+protein_clf.egg-info/SOURCES.txt
+protein_clf.egg-info/dependency_links.txt
+protein_clf.egg-info/top_level.txt
+src/__init__.py
+src/featurize.py

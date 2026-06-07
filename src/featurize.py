@@ -1,0 +1,35 @@
+from Bio.SeqUtils.ProtParam import ProteinAnalysis
+import pandas as pd
+import numpy as np
+from itertools import product
+
+def kmers_freq(seq,k=3):
+    kmers = ["".join(p) for p in product("ACDEFGHIKLMNPQRSTVWY",repeat=3)]
+    freq = {kmer:0 for kmer in kmers}
+    for i in range(len(seq) - k + 1):
+        kmer = seq[i:i+k]
+        if kmer in freq:
+            freq[kmer] += 1
+    return pd.Series([v /len(seq) for v in freq.values()])
+
+def featurize(AA_df:pd.DataFrame,kmers_k=3):
+    #secondary_structures = ["Helix","Turn","Sheet"]
+    features_array = []
+    AAs = AA_df["Sequence"].apply(lambda x: ProteinAnalysis(x).amino_acids_percent)
+
+    for amino_acid in "ACDEFGHIKLMNPQRSTVWY":
+        features_array.append(AAs.apply(lambda x: x.get(amino_acid,0)))
+
+    features_array.append(AA_df["Sequence"].apply(lambda x: ProteinAnalysis(x).molecular_weight()).to_list())
+    features_array.append(AA_df["Sequence"].apply(lambda x: np.mean(ProteinAnalysis(x).flexibility())).to_list())
+    features_array.append(AA_df["Sequence"].apply(lambda x: ProteinAnalysis(x).gravy()).to_list())
+
+
+    secondary_structures = AA_df["Sequence"].apply(lambda x: ProteinAnalysis(x).secondary_structure_fraction())
+    for ss in range(3):
+        features_array.append(secondary_structures.apply(lambda x: x[ss]).to_list())
+    kmers = AA_df["Sequence"].apply(kmers_freq).to_numpy()
+    features_array = np.array(features_array).T
+    features_array = np.append(features_array,kmers,axis=1)
+    return features_array
+    

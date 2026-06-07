@@ -11,5 +11,6 @@ ipython_config.py
 
 /data/CleanSequences
 /data/RawSequences
+/protein_clf.egg-info
 # Remove previous ipynb_checkpoints
 #   git rm -r .ipynb_checkpoints/ 
