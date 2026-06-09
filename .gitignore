@@ -9,8 +9,9 @@
 profile_default/
 ipython_config.py
 
-data/CleanedSequences/*
-data/RawSequences/*
+*.csv
+*.csv
+
 
 protein_clf.egg-info
 # Remove previous ipynb_checkpoints
