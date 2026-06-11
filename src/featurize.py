@@ -2,6 +2,7 @@ from Bio.SeqUtils.ProtParam import ProteinAnalysis
 import pandas as pd
 import numpy as np
 from itertools import product
+from sklearn.preprocessing import StandardScaler 
 
 def kmers_freq(seq,k=3):
     kmers = ["".join(p) for p in product("ACDEFGHIKLMNPQRSTVWY",repeat=3)]
@@ -13,6 +14,7 @@ def kmers_freq(seq,k=3):
     return pd.Series([v /len(seq) for v in freq.values()])
 
 def featurize(AA_df:pd.DataFrame,kmers_k=3):
+    """"Returns an array of scaled and transformed features from the sequence Dataframe"""
     #secondary_structures = ["Helix","Turn","Sheet"]
     features_array = []
     AAs = AA_df["Sequence"].apply(lambda x: ProteinAnalysis(x).amino_acids_percent)
@@ -31,5 +33,6 @@ def featurize(AA_df:pd.DataFrame,kmers_k=3):
     kmers = AA_df["Sequence"].apply(kmers_freq).to_numpy()
     features_array = np.array(features_array).T
     features_array = np.append(features_array,kmers,axis=1)
+    features_array = StandardScaler().fit_transform(features_array)
     return features_array
     
