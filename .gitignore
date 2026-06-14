@@ -10,8 +10,12 @@ profile_default/
 ipython_config.py
 
 *.csv
-*.csv
 
+### macOS ###
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
 
 protein_clf.egg-info
 # Remove previous ipynb_checkpoints
