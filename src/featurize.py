@@ -35,4 +35,22 @@ def featurize(AA_df:pd.DataFrame,kmers_k=3):
     features_array = np.append(features_array,kmers,axis=1)
     features_array = StandardScaler().fit_transform(features_array)
     return features_array
-    
+
+def featurize_single(Sequence:str):
+    features_array = []
+    AAs = ProteinAnalysis(Sequence).amino_acids_percent
+    for amino_acid in "ACDEFGHIKLMNPQRSTVWY":
+        features_array.append(AAs.get(amino_acid,0))
+    features_array.append(ProteinAnalysis(Sequence).molecular_weight())
+    features_array.append(np.mean(ProteinAnalysis(Sequence).flexibility()))
+    features_array.append(ProteinAnalysis(Sequence).gravy())
+
+
+    secondary_structures = ProteinAnalysis(Sequence).secondary_structure_fraction()
+    for ss in range(3):
+        features_array.append(secondary_structures[ss])
+    kmers = kmers_freq(Sequence)
+    features_array = np.array(features_array).T
+    features_array = np.append(features_array,kmers).reshape(-1, 1).T
+    features_array = StandardScaler().fit_transform(features_array)
+    return features_array
