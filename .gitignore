@@ -11,11 +11,16 @@ ipython_config.py
 
 *.csv
 *.pkl
+
+!/data/CleanedSequences/
+!/data/RawSequences/
+!/models/
 ### macOS ###
 # General
 .DS_Store
 .AppleDouble
 .LSOverride
+
 
 protein_clf.egg-info
 # Remove previous ipynb_checkpoints
