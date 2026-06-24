@@ -12,9 +12,9 @@ ipython_config.py
 *.csv
 *.pkl
 
-!/data/CleanedSequences/
-!/data/RawSequences/
-!/models/
+!/data/CleanedSequences
+!/data/RawSequences
+!/models
 ### macOS ###
 # General
 .DS_Store
