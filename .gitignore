@@ -1,27 +1,24 @@
-### JupyterNotebooks ###
-# gitignore template for Jupyter Notebooks
-# website: http://jupyter.org/
-
-.ipynb_checkpoints
+### Jupyter Notebooks ###
+.ipynb_checkpoints/
 */.ipynb_checkpoints/*
 
 # IPython
 profile_default/
 ipython_config.py
 
-*.csv
-*.pkl
+### Python ###
+__pycache__/
+*.py[cod]
+*.egg-info/
 
-!/data/CleanedSequences
-!/data/RawSequences
-!/models
 ### macOS ###
-# General
 .DS_Store
 .AppleDouble
 .LSOverride
 
-
-protein_clf.egg-info
-# Remove previous ipynb_checkpoints
-#   git rm -r .ipynb_checkpoints/ 
+### Project data & models ###
+# Raw/cleaned sequence data (hundreds of MB) and trained models (the SVM
+# alone is >500MB) are regenerated locally rather than committed.
+# Run `python -m src.data` then `python -m src.train` to produce them.
+data/
+models/
