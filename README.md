@@ -43,9 +43,11 @@ or with pip:
 pip install -r requirements.txt
 ```
 
-`data/` and `models/` aren't checked into the repo — the raw/cleaned sequence
-data runs into the hundreds of MB and the trained SVM alone is over 500MB.
-Regenerate them locally:
+`data/` isn't checked into the repo — the raw/cleaned sequence data runs into
+the hundreds of MB. The Random Forest model and scaler ship in `models/` so
+the app works out of the box; the SVM (500MB+, too large for git and for
+Streamlit Community Cloud's free-tier memory) doesn't. Regenerate either
+locally if you want to retrain or add the SVM back to the model picker:
 
 ```bash
 python -m src.data    # fetch sequences from UniProt into data/
@@ -57,6 +59,19 @@ Then launch the app:
 ```bash
 streamlit run streamlit_website.py
 ```
+
+### Deploying on Streamlit Community Cloud
+
+1. Push this repo to GitHub (it already ships the Random Forest model + scaler,
+   so no training step is needed on the deploy side).
+2. On [share.streamlit.io](https://share.streamlit.io), create a new app
+   pointing at this repo, `main` branch, main file path
+   `protein-prediction/streamlit_website.py` (or `streamlit_website.py` if
+   deploying from the `protein-prediction` repo directly rather than the
+   `protein-predictor` wrapper that embeds it as a submodule).
+3. If deploying from the wrapper repo, enable "Clone submodules" in the app's
+   advanced settings, since `protein-prediction` is linked in as a git
+   submodule.
 
 ## Project layout
 

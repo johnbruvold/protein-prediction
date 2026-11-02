@@ -16,9 +16,15 @@ __pycache__/
 .AppleDouble
 .LSOverride
 
-### Project data & models ###
-# Raw/cleaned sequence data (hundreds of MB) and trained models (the SVM
-# alone is >500MB) are regenerated locally rather than committed.
-# Run `python -m src.data` then `python -m src.train` to produce them.
+### Project data ###
+# Raw/cleaned sequence data (hundreds of MB) is regenerated locally rather
+# than committed. Run `python -m src.data` to produce it.
 data/
-models/
+
+### Models ###
+# The Random Forest model and the shared StandardScaler are small enough to
+# ship, and are what the deployed Streamlit app loads. The SVM is 500MB+ —
+# too large for git and for Streamlit Community Cloud's free-tier memory —
+# so it stays local-only; train it with `python -m src.train` if you want it
+# available in the app's model picker when running locally.
+models/SupportVectorClassifier.pkl
